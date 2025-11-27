@@ -26,32 +26,26 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-
 // ------------------- ZOD SCHEMA -------------------
 const userSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email format").min(1, "Email is required"),
   role: z.nativeEnum(ROLE, { required_error: "Role is required" }),
-
-
   mobileNo: z
     .string()
     .regex(/^\d{10}$/, "Mobile number must be exactly 10 digits")
     .refine((val) => /^\d+$/.test(val), "Only numbers allowed"),
-
   address: z.string().min(5, "Address must be at least 5 characters"),
   password: z.string().min(5, "Password must be at least 5 characters"),
 });
 
 type UserForm = z.infer<typeof userSchema>;
 
-
 // ------------------- COMPONENT START -------------------
 const UserManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -60,42 +54,42 @@ const UserManagement = () => {
     handleSubmit,
     setValue,
     reset,
-    setError,
-    clearErrors,
     formState: { errors },
   } = useForm<UserForm>({
     resolver: zodResolver(userSchema),
   });
 
   // ------------------- Fetch Users -------------------
-useEffect(() => {
-  const fetchUsers = async () => {
-    try {
-      const res = await getAllUsers();
-      setUsers(res);
-    } catch {
-      toast.error("Failed to load Users")
-    } finally {
-      setLoading(false)
-    }
-    }
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await getAllUsers();
+        setUsers(res);
+      } catch {
+        toast.error("Failed to load users");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUsers();
+  }, []);
 
-    fetchUsers()
-  },[])
-
-    // ------------------- CREATE USER -------------------
-
+  // ------------------- CREATE USER -------------------
   const submitForm = async (data: UserForm) => {
-    console.log("PAYLOAD SENT:", data);
+    // Strip "ROLE_" before sending to backend
+    const payload = {
+      ...data,
+      role: data.role.replace("ROLE_", ""),
+    };
+
     try {
-      const res = await registerUser(data);
+      const res = await registerUser(payload);
       toast.success(res.data.message || "User created successfully!");
       reset();
       setIsModalOpen(false);
 
-      const updatedList = await getAllUsers()
+      const updatedList = await getAllUsers();
       setUsers(updatedList);
-      
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Failed to create user");
     }
@@ -211,7 +205,7 @@ useEffect(() => {
                   <SelectContent>
                     {Object.values(ROLE).map((role) => (
                       <SelectItem key={role} value={role}>
-                        {role.split('_')[1]}
+                        {role.replace("ROLE_", "")}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -245,9 +239,7 @@ useEffect(() => {
               <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit">
-                {isEdit ? "Update User" : "Add User"}
-              </Button>
+              <Button type="submit">{isEdit ? "Update User" : "Add User"}</Button>
             </DialogFooter>
           </form>
         </DialogContent>
