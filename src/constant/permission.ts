@@ -3,7 +3,7 @@ import { ROLE } from "@/enum/User";
 import { Permission } from '@/utils/module_access';
 
 export type RolePermission<M extends string> = {
-  [key in M]: Permission;
+    [key in M]: Permission;
 };
 
 

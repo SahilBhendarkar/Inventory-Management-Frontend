@@ -1,4 +1,3 @@
-// srcauth.api.ts
 import axiosInstance from "./axios";
 import type { LoginResponse, RegisterPayload, LoginPayload } from "../types/Auth";
 

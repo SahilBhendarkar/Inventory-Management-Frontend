@@ -15,7 +15,7 @@ export const getLowStockProducts = (): Promise<Product[]> => {
 };
 
 
-//     --------Transactions-------------
+//   -----------Transactions-------------
 
 export const getAllTransactionLogs = async (): Promise<TransactionLog[]> => {
   const response = await axiosInstance.get<TransactionLog[]>("transactions/all");
