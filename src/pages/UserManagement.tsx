@@ -76,7 +76,6 @@ const UserManagement = () => {
 
   // ------------------- CREATE USER -------------------
   const submitForm = async (data: UserForm) => {
-    // Strip "ROLE_" before sending to backend
     const payload = {
       ...data,
       role: data.role.replace("ROLE_", ""),
