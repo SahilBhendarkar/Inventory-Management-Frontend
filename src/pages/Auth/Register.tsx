@@ -55,7 +55,6 @@ export default function Register({setTab,setSwitchTab}:{setTab:Dispatch<SetState
       animate={{ opacity: 1 }}
     >
 
-      {/* Row 1 — Full Name + Mobile */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <Label>Full Name</Label>
@@ -75,7 +74,6 @@ export default function Register({setTab,setSwitchTab}:{setTab:Dispatch<SetState
         </div>
       </div>
 
-      {/* Row 2 — Email + Password */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <Label>Email</Label>
@@ -111,7 +109,6 @@ export default function Register({setTab,setSwitchTab}:{setTab:Dispatch<SetState
         </div>
       </div>
 
-      {/* Address (Full Width) */}
       <div>
         <Label>Address</Label>
         <Textarea {...register("address")} rows={3} placeholder="Full address" />
@@ -119,7 +116,6 @@ export default function Register({setTab,setSwitchTab}:{setTab:Dispatch<SetState
       </div>
 
 
-      {/* Register As (Full Width) */}
       <div>
         <Label>Register As</Label>
         <Select onValueChange={(value) => setValue("role", value as string)} defaultValue="CUSTOMER">
@@ -135,7 +131,6 @@ export default function Register({setTab,setSwitchTab}:{setTab:Dispatch<SetState
         {errors.role && <p className="text-red-500 text-xs">{errors.role.message}</p>}
       </div>
 
-      {/* Submit Button */}
       <Button type="submit" disabled={isSubmitting} className="w-full">
         {isSubmitting ? "Creating Account..." : "Register"}
       </Button>

@@ -73,14 +73,12 @@ export default function Login({ setTab, setSwitchTab }: { setTab: Dispatch<SetSt
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      {/* Email */}
       <div>
         <Label>Email</Label>
         <Input {...register("email")} type="email" autoComplete="username" placeholder="you@example.com" />
         {errors.email && <p className="text-red-500 text-xs">{errors.email.message}</p>}
       </div>
 
-      {/* Password */}
       <div>
         <Label htmlFor="password">Password</Label>
         <div className="relative mt-1">

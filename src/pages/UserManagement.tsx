@@ -26,7 +26,6 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-// ------------------- ZOD SCHEMA -------------------
 const userSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Invalid email format").min(1, "Email is required"),
@@ -41,7 +40,6 @@ const userSchema = z.object({
 
 type UserForm = z.infer<typeof userSchema>;
 
-// ------------------- COMPONENT START -------------------
 const UserManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -59,7 +57,6 @@ const UserManagement = () => {
     resolver: zodResolver(userSchema),
   });
 
-  // ------------------- Fetch Users -------------------
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -94,7 +91,7 @@ const UserManagement = () => {
     }
   };
 
-  // ------------------- Mobile Input Only Numbers -------------------
+  // ------------------- Mobile Number -------------------
   const handleMobileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "").slice(0, 10);
     setValue("mobileNo", value, { shouldValidate: true });
@@ -146,7 +143,6 @@ const UserManagement = () => {
         <DataTable columns={columns} data={users} />
       </div>
 
-      {/* Add User Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="max-w-3xl">
           <DialogHeader>
@@ -157,21 +153,19 @@ const UserManagement = () => {
 
           <form onSubmit={handleSubmit(submitForm)} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Name */}
+
               <div>
                 <Label>Name</Label>
                 <Input {...register("name")} placeholder="Enter full name" />
                 {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
               </div>
 
-              {/* Email */}
               <div>
                 <Label>Email</Label>
                 <Input {...register("email")} type="email" placeholder="user@example.com" />
                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
               </div>
 
-              {/* Mobile Number */}
               <div>
                 <Label>Mobile Number</Label>
                 <Input
@@ -187,14 +181,12 @@ const UserManagement = () => {
                 )}
               </div>
 
-              {/* Address */}
               <div>
                 <Label>Address</Label>
                 <Input {...register("address")} placeholder="Full address" />
                 {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address.message}</p>}
               </div>
 
-              {/* Role */}
               <div>
                 <Label>Role</Label>
                 <Select onValueChange={(value) => setValue("role", value as ROLE)}>
@@ -212,7 +204,6 @@ const UserManagement = () => {
                 {errors.role && <p className="text-red-500 text-xs mt-1">{errors.role.message}</p>}
               </div>
 
-              {/* Password */}
               <div>
                 <Label>Password</Label>
                 <div className="relative">

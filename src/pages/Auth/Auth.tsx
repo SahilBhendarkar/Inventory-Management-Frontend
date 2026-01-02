@@ -13,18 +13,16 @@ export default function Auth() {
   return (
     <div className="min-h-screen flex flex-col items-center pt-5 bg-[#e7ebff] px-4">
 
-      {/* Fixed heading */}
       <h1 className="text-3xl font-bold text-black mb-8">
         Inventory Management
       </h1>
 
-      {/* Center card */}
+
       <Card className="w-full max-w-2xl shadow-md">
         <CardContent className="p-6">
 
           <Tabs value={tab} onValueChange={setTab} className="w-full">
 
-            {/* Tab buttons */}
             <TabsList className="grid grid-cols-2 w-full">
               <TabsTrigger value={AuthTabs.LOGIN}
                 disabled={!switchTab}
@@ -36,7 +34,6 @@ export default function Auth() {
               >Register</TabsTrigger>
             </TabsList>
 
-            {/* Login Tab */}
             <TabsContent value={AuthTabs.LOGIN}>
               <motion.div
                 key={AuthTabs.LOGIN}
@@ -48,7 +45,6 @@ export default function Auth() {
               </motion.div>
             </TabsContent>
 
-            {/* Register Tab */}
             <TabsContent value={AuthTabs.REGISTER}>
               <motion.div
                 key={AuthTabs.REGISTER}
